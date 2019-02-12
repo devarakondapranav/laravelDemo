@@ -130,4 +130,22 @@ class BatchController extends Controller
     {
         //
     }
+    
+    public function postAdminAssignRoles(Request $request)
+    {
+
+        return redirect('/success')->with('orderNo', 42);
+        $user = User::where('email', $request['email'])->first();
+        $user->roles()->detach();
+        if ($request['role_user']) {
+            $user->roles()->attach(Role::where('name', 'CorporateClient')->first());
+        }
+        if ($request['role_author']) {
+            $user->roles()->attach(Role::where('name', 'Manager')->first());
+        }
+        if ($request['role_admin']) {
+            $user->roles()->attach(Role::where('name', 'Admin')->first());
+        }
+        return redirect()->back();
+    }
 }
